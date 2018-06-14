@@ -47,7 +47,9 @@ h2 {
   margin-bottom: 10px;
 }
 
-section div div.event{
+section div.event{
+  padding: 0.5em 1em;
+  margin: 2em 0;
   font-size: 1.3rem;
   font-weight: bold;
   text-align: left;
