@@ -60,6 +60,8 @@
       var div_events = document.querySelector(".events");
       var selectorh3 =document.getElementsByTagName("h3"); 
       var more = document.createElement("button");
+      more.textContent = "続きを10件表示する";
+      more.className = "more";
       var eventALL;
       var categoryList=[];
       
@@ -80,7 +82,7 @@
       });
       
      
-      //件数指定
+      //件数指定して表示
       function showEvent(json, j){
         console.log(j+ "件表示");
         for(var i=1; i<json.length+1; i++){
@@ -121,36 +123,43 @@
           if(j<i){
             event.style.display="none";
           }
-
           div_events.appendChild(event);
         }
 
         //続きを表示するボタンの表示
         if(!(j>json.length)){
-          
-          // more.type = "button";
-          // more.style.display = "block";
+          var pre = j;
+
           more.onclick = function(){
             var count = 10; 
-            var div_events = document.getElementsByClassName("event");
-            
-            for(var i=1; i<div_events.length; i++){
-              var event_p = div_events[i].getElementsByTagName("p");
-              if(div_events[i].style.display == "none" ){
-                div_events[i].style.display = "block";
+            var div_events_btn = document.getElementsByClassName("event");
+            var size = json.length;
+
+            pre = pre + count;
+            console.log(more);
+            console.log(pre);
+            console.log(size);
+            if(pre>size){
+              div_events.removeChild(more);
+            }
+
+            for(var i=1; i<div_events_btn.length; i++){
+              var event_p = div_events_btn[i].getElementsByTagName("p");
+              if(div_events_btn[i].style.display == "none" ){
+                div_events_btn[i].style.display = "block";
                 count--;
               }
               if(count==0){
                 break;
               }
             }
+          
+            
 
           }
-          more.textContent = "続きを10件表示する";
-          more.className = "more";
           div_events.appendChild(more);
- 
         }
+
       }
 
       //削除                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       m
@@ -223,9 +232,8 @@
             }
           } 
         }
-        var button = document.getElementsByClassName("more");
-        button_parent = button.parentNode;
-        button_parent.removeChild(button);
+        button_parent = more.parentNode;
+        button_parent.removeChild(more);
      }
       
 
