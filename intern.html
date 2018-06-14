@@ -59,6 +59,7 @@
     <script>
       var div_events = document.querySelector(".events");
       var selectorh3 =document.getElementsByTagName("h3"); 
+      var more = document.createElement("button");
       var eventALL;
       var categoryList=[];
       
@@ -126,7 +127,7 @@
 
         //続きを表示するボタンの表示
         if(!(j>json.length)){
-          var more = document.createElement("button");
+          
           // more.type = "button";
           // more.style.display = "block";
           more.onclick = function(){
@@ -201,6 +202,8 @@
             div_events[i].style.display = "none";
           }
         }
+        button_parent = more.parentNode;
+        button_parent.removeChild(more);
       }
 
       function search_click(){
@@ -220,6 +223,9 @@
             }
           } 
         }
+        var button = document.getElementsByClassName("more");
+        button_parent = button.parentNode;
+        button_parent.removeChild(button);
      }
       
 
