@@ -46,3 +46,9 @@ h2 {
   letter-spacing: -5px;
   margin-bottom: 10px;
 }
+
+section div div.event{
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+}
