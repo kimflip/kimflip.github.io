@@ -94,7 +94,7 @@
           var event_place = document.createElement("p");
           var city = document.createElement("p");
           
-          event.textContent =  i + "." + json[i-1].event_name;
+          event.textContent = "<span>" + i + "." + json[i-1].event_name +"</span>";
           category.textContent = "カテゴリー：" + json[i-1].category;
           start_date.textContent = "開始日：" + json[i-1].start_date;
           end_date.textContent = "終了日：" + json[i-1].end_date;
