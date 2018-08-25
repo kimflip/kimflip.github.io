@@ -39,13 +39,13 @@
     var sound = document.getElementById('sound');
     
     //取得処理
-    // collection.get().then(snapshot => {
-    //     snapshot.forEach(element => {
-    //         var temp = document.createElement('p');
-    //         temp.textContent = element.data().sound;
-    //         sound.appendChild(temp);            
-    //     });
-    // });
+    collection.get().then(snapshot => {
+        snapshot.forEach(element => {
+            var temp = document.createElement('p');
+            temp.textContent = element.data().sound;
+            sound.appendChild(temp);            
+        });
+    });
 </script>
 </body>
 </head>
