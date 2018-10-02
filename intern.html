@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>EVENT</title>
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">  -->
+    <link rel="stylesheet" href="kimflip.github.io/style.css">
+	  <!-- <script type="text/javascript" src="jquery-3.3.1.min.js"></script> -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  
+  </head>
+
+  <body>
+
+      <header class="select">
+        <h1>イベント</h1>
+        <h3>スクリプトがブロックされ読み込まれない場合は承認してください。</h3>
+        <button onclick="resetEventAll();showEvent(eventALL,eventALL.length)">全件表示</button>
+
+        <button onclick="resetEventAll();showEvent(eventALL,10)">10件表示</button>
+        
+        <button onclick="resetEventAll();showEvent(eventALL,30)">30件表示</button>
+        
+       
+        <div class="selectCategory">
+          <form name="cate">
+              カテゴリー：
+            <select name="word" class="category">
+                <option>選択してください</option>
+            </select>
+            <input type="button" value="選択" onclick="select_click()"/>
+          </form>
+        </div>
+
+        <div class="search">
+          <form name="search">
+            キーワード検索：
+            <input type="text" name="key" value="">
+            <input type="button" value="検索" onclick="search_click()"/>
+          </form>
+        </div>
+      </header>
+
+      <section>
+        
+        <div class="events">
+          <div class="event">
+          </div>
+        </div>
+ 
+        
+      </section>
+
+    <!-- <script src="events.js"></script> -->
+
+
+    <script>
+      var div_events = document.querySelector(".events");
+      var selectorh3 =document.getElementsByTagName("h3"); 
+      var more = document.createElement("button");
+      more.textContent = "続きを10件表示する";
+      more.className = "more";
+      var eventALL;
+      var categoryList=[];
+      
+      //初期化
+      $(document).ready(function(){ 
+        //json読み込み
+        $(function(){
+          $.getJSON("https://kimflip.github.io/fukui-event.json").done(
+            function (json){
+              eventALL = json;
+              console.log("json取得成功");
+              console.log(eventALL);
+              showEvent(json,json.length);
+              setCategory(json);
+            }
+          );
+        });
+      });
+      
+     
+      //件数指定して表示
+      function showEvent(json, j){
+        console.log(j+ "件表示");
+        for(var i=1; i<json.length+1; i++){
+          var event = document.createElement("div");
+          event.className = "event";
+          var event_name = document.createElement("p");
+          var category = document.createElement("p");
+          var start_date = document.createElement("p");
+          var end_date = document.createElement("p");
+          var description = document.createElement("p");
+          var schedule_description = document.createElement("p");
+          var contact = document.createElement("p");
+          var event_place = document.createElement("p");
+          var city = document.createElement("p");
+          
+          event.textContent =  i + "." + json[i-1].event_name ;
+          category.textContent = "カテゴリー：" + json[i-1].category;
+          start_date.textContent = "開始日：" + json[i-1].start_date;
+          end_date.textContent = "終了日：" + json[i-1].end_date;
+          description.textContent = "概要：" + json[i-1].description;
+          schedule_description.textContent = "備考：" + json[i-1].schedule_description;
+          contact.textContent = "連絡先：" + json[i-1].contact + "(" + json[i-1].contact_phone_number + ")";
+          event_place.textContent = "場所：" + json[i-1].event_place + "(緯度" + json[i-1].latitude + ",経度" + json[i-1].longitude +")";
+          city.textContent = "市町村：" + json[i-1].city;
+
+          event.appendChild(event_name);
+          event.appendChild(category);
+          event.appendChild(start_date);
+          event.appendChild(end_date);
+          event.appendChild(description);
+          event.appendChild(schedule_description);
+          event.appendChild(contact);
+          event.appendChild(event_place);
+          event.appendChild(city);
+
+          event.id = json[i-1].category;
+          
+          if(j<i){
+            event.style.display="none";
+          }
+          div_events.appendChild(event);
+        }
+
+        //続きを表示するボタンの表示
+        if(!(j>=json.length)){
+          var pre = j;
+
+          more.onclick = function(){
+            var count = 10; 
+            var div_events_btn = document.getElementsByClassName("event");
+            var size = json.length;
+
+            pre = pre + count;
+            console.log(more);
+            console.log(pre);
+            console.log(size);
+            if(pre>size){
+              div_events.removeChild(more);
+            }
+
+            for(var i=1; i<div_events_btn.length; i++){
+              var event_p = div_events_btn[i].getElementsByTagName("p");
+              if(div_events_btn[i].style.display == "none" ){
+                div_events_btn[i].style.display = "block";
+                count--;
+              }
+              if(count==0){
+                break;
+              }
+            }
+          
+            
+
+          }
+          div_events.appendChild(more);
+        }
+
+      }
+
+      //削除                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       m
+      function resetEventAll(){
+        var dom_obj = document.querySelector(".events");
+        var dom_obj_parent = dom_obj.parentNode;
+        dom_obj_parent.removeChild(dom_obj);
+        
+        //空のdivを挿入
+        div_events = document.createElement("div");
+        div_events.className = "events";
+        var div_event = document.createElement("div");
+        div_event.className = "event";
+        div_events.appendChild(div_event);
+        dom_obj_parent.appendChild(div_events);        
+      }
+      
+      function setCategory(json){
+        //カテゴリリストの作成
+        var flag;
+        for(var i=0;i<json.length;i++){
+          flag = categoryList.indexOf(json[i].category); 
+          if(flag==-1){
+            categoryList.unshift(json[i].category);
+          }
+        }
+        console.log(categoryList);
+        for(var i=0;i<categoryList.length;i++){
+          var op_category = document.createElement("option");
+          var selector = document.querySelector(".category");
+          op_category.value = categoryList[i];
+          op_category.textContent = categoryList[i];
+          console.log(selector);
+          console.log(op_category);
+          selector.appendChild(op_category);
+        }      
+      }
+
+      function select_click(){
+        var str = document.cate.word.value;
+        console.log(str);
+        var div_events = document.getElementsByClassName("event");
+        for(var i=1; i<div_events.length; i++){
+          var event_p = div_events[i].getElementsByTagName("p");
+          // console.log(event_p[1].textContent);
+          if(event_p[1].textContent == "カテゴリー："　+ str ){
+            div_events[i].style.display = "block";
+          }else{
+            div_events[i].style.display = "none";
+          }
+        }
+        button_parent = more.parentNode;
+        button_parent.removeChild(more);
+      }
+
+      function search_click(){
+        // console.log(document.search.key.value);
+        var str = document.search.key.value;
+        console.log(str);
+        var div_events = document.getElementsByClassName("event");
+        for(var i=1; i<div_events.length; i++){
+          var event_p = div_events[i].getElementsByTagName("p");
+          div_events[i].style.display = "none";
+          //console.log(event_p);
+          for(var e=1; e<event_p.length; e++){
+            console.log(event_p[e].textContent);
+            if(event_p[e].textContent.search(str) != -1){
+              div_events[i].style.display = "block";
+              break;
+            }
+          } 
+        }
+        button_parent = more.parentNode;
+        button_parent.removeChild(more);
+     }
+      
+
+    </script>
+  </body>
+</html>

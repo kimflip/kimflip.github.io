@@ -1,52 +1,6 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>hukuikokutaiApp</title>
 <body>
-
-<div id="sound"></div>
-
-<!-- <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script> -->
-<!-- 必須のやつ -->
-<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
-<!-- 使う機能毎にインクルード -->
-<!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script> -->
-<!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script> -->
-<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
-<!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-messaging.js"></script> -->
-<!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-functions.js"></script> -->
-
-<script>
-    // Initialize Firebase
-    var config = {
-    apiKey: "AIzaSyB63DLQvXds34cH-NtHFa-gmLij1oWX_4w",
-    authDomain: "fukuikokutai.firebaseapp.com",
-    databaseURL: "https://fukuikokutai.firebaseio.com",
-    projectId: "fukuikokutai",
-    storageBucket: "fukuikokutai.appspot.com",
-    messagingSenderId: "929516682658"
-    };
-    firebase.initializeApp(config);
-
-    var db = firebase.firestore();
-    db.settings({
-        timestampsInSnapshots: true
-    });
-
-    var collection = db.collection('fukuikokutai');
-    var sound = document.getElementById('sound');
-    
-    //取得処理
-    collection.get().then(snapshot => {
-        snapshot.forEach(element => {
-            var temp = document.createElement('p');
-            temp.textContent = element.data().sound;
-            sound.appendChild(temp);            
-        });
-    });
-</script>
+<h1>Hello World</h1>
 </body>
-</head>
 </html>
